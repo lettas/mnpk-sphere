@@ -15,10 +15,6 @@
     var sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 
-    var axis = new THREE.AxisHelper(1000);
-    axis.position.set(0,0,0);
-    scene.add(axis);
-
     var camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
     camera.position.set(0,0,0.1);
     camera.lookAt(sphere.position);
