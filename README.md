@@ -3,8 +3,8 @@ mnpk sphere
 
 ## これはなに
 
-(Ricoh Theta S)[https://theta360.com/ja/about/theta/s.html]で撮影した全天球イメージをいい感じに表示するためのViewerです。
-(まんぷく！のブログ)[https://mnpk.jp/]で記事内に表示するために作りました。
+[Ricoh Theta S](https://theta360.com/ja/about/theta/s.html)で撮影した全天球イメージをいい感じに表示するためのViewerです。
+[まんぷく！のブログ](https://mnpk.jp/)で記事内に表示するために作りました。
 
 ## 使い方(イメージ)
 
