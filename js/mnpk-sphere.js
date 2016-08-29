@@ -22,7 +22,6 @@
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(width, height);
     renderer.setClearColor({color: 0x000000});
-    sphereImage.appendChild(renderer.domElement);
     renderer.render(scene, camera);
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -35,12 +34,15 @@
     }
 
     render();
+
+    return renderer.domElement;
   }
 
   function initialize() {
     var sphereImages = document.querySelectorAll('.mnpk-sphere-image');
     for (var i = 0; i < sphereImages.length; i++) {
-      createCanvas(sphereImages[i]);
+      var canvas = createCanvas(sphereImages[i]);
+      sphereImages[i].appendChild(canvas);
     }
   }
 
