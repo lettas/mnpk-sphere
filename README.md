@@ -15,6 +15,6 @@ mnpk sphere
 
 ...
 
-<div class="mnpk-sphere-image" data-url="./img/sample.jpg" data-width="500" data-height="375">
+<div class="mnpk-sphere-image" data-url="./img/sample.jpg" data-width="500" data-height="375"></div>
 ```
 
