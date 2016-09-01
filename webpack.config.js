@@ -8,7 +8,7 @@ module.exports = {
   },
   devtool: '#source-map',
   plugins: [
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
   ],
   module: {
     loaders: [
