@@ -16,3 +16,19 @@ mnpk sphere
 <div class="mnpk-sphere-image" data-url="./img/sample.jpg" data-width="500" data-height="375"></div>
 ```
 
+## 作り方
+
+```sh
+$ npm install
+
+$ # run watchでファイルを監視してコンパイルしてくれる
+$ npm run watch
+
+$ # run serverでhttpサーバが起動する
+$ npm run server
+$ # => http://127.0.0.1:8080 みたいな
+
+```
+
+`npm run watch` と `npm run server` は別々のターミナルで動かすとGoodです。
+
