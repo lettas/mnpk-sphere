@@ -21,10 +21,6 @@ function initialize() {
     }
   }
 
-  for (const canvas of canvases) {
-    console.log(canvas);
-  }
-
   render();
 }
 
