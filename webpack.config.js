@@ -1,10 +1,15 @@
+var webpack = require("webpack");
+
 module.exports = {
   entry: './src/app.js',
   output: {
     path: './dist',
     filename: 'mnpk-sphere.js'
   },
-  devtool: 'inline-source-map',
+  devtool: '#source-map',
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   module: {
     loaders: [
       {
