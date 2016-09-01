@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import './control/OrbitControls';
+
 (function() {
   function createCanvas(sphereImage) {
     var url = sphereImage.dataset.url;
