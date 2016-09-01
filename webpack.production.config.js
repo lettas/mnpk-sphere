@@ -4,9 +4,11 @@ module.exports = {
   entry: './src/app.js',
   output: {
     path: './dist',
-    filename: 'mnpk-sphere.js'
+    filename: 'mnpk-sphere.min.js'
   },
-  devtool: '#source-map',
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   module: {
     loaders: [
       {

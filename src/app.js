@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import SphereImageCanvas from './sphere-image-canvas';
 import './control/OrbitControls';
 
