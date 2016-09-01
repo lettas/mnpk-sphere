@@ -9,9 +9,7 @@ mnpk sphere
 ## 使い方(イメージ)
 
 ```html
-<script src="js/three.min.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/mnpk-sphere.js"></script>
+<script src="mnpk-sphere.js"></script>
 
 ...
 
