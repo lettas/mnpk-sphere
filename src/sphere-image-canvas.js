@@ -26,7 +26,7 @@ export default class SphereImageCanvas {
 
     function createCamera(width, height) {
       const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
-      camera.position.set(0,0,0);
+      camera.position.set(0, 0, 0.1);
       return camera;
     }
 
