@@ -1,5 +1,4 @@
 import SphereImageViewer from './sphere-image-viewer';
-import './control/OrbitControls';
 
 function initialize() {
   const canvases = [];
