@@ -46,9 +46,9 @@
 
 	'use strict';
 	
-	var _sphereImageCanvas = __webpack_require__(1);
+	var _sphereImageViewer = __webpack_require__(4);
 	
-	var _sphereImageCanvas2 = _interopRequireDefault(_sphereImageCanvas);
+	var _sphereImageViewer2 = _interopRequireDefault(_sphereImageViewer);
 	
 	__webpack_require__(3);
 	
@@ -70,7 +70,7 @@
 	      var width = _imageContainer$datas.width;
 	      var height = _imageContainer$datas.height;
 	
-	      var canvas = new _sphereImageCanvas2.default(url, width, height);
+	      var canvas = new _sphereImageViewer2.default(url, width, height);
 	      imageContainer.appendChild(canvas.domElement);
 	      canvases.push(canvas);
 	    }
@@ -124,77 +124,7 @@
 	document.addEventListener('DOMContentLoaded', initialize);
 
 /***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _three = __webpack_require__(2);
-	
-	var THREE = _interopRequireWildcard(_three);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var textureLoader = new THREE.TextureLoader();
-	
-	var SphereImageCanvas = function () {
-	  function SphereImageCanvas(url, width, height) {
-	    _classCallCheck(this, SphereImageCanvas);
-	
-	    var scene = new THREE.Scene();
-	
-	    var sphere = this._createSphereMesh(url);
-	    scene.add(sphere);
-	
-	    var camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
-	    camera.position.set(0, 0, 0.1);
-	    camera.lookAt(sphere.position);
-	
-	    var renderer = new THREE.WebGLRenderer();
-	    renderer.setSize(width, height);
-	    renderer.setClearColor({ color: 0x000000 });
-	
-	    this.url = url;
-	    this.width = width;
-	    this.height = height;
-	    this.scene = scene;
-	    this.sphere = sphere;
-	    this.camera = camera;
-	    this.renderer = renderer;
-	    this.domElement = renderer.domElement;
-	  }
-	
-	  _createClass(SphereImageCanvas, [{
-	    key: 'update',
-	    value: function update() {
-	      this.sphere.rotation.y += 0.05 * Math.PI / 180;
-	      this.renderer.render(this.scene, this.camera);
-	      //this.controls.update();
-	    }
-	  }, {
-	    key: '_createSphereMesh',
-	    value: function _createSphereMesh(url) {
-	      var geometry = new THREE.SphereGeometry(5, 60, 40);
-	      geometry.scale(-1, 1, 1);
-	      var material = new THREE.MeshBasicMaterial({ map: textureLoader.load(url) });
-	      return new THREE.Mesh(geometry, material);
-	    }
-	  }]);
-	
-	  return SphereImageCanvas;
-	}();
-	
-	exports.default = SphereImageCanvas;
-
-/***/ },
+/* 1 */,
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -42881,6 +42811,77 @@
 		}
 	
 	});
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _three = __webpack_require__(2);
+	
+	var THREE = _interopRequireWildcard(_three);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var textureLoader = new THREE.TextureLoader();
+	
+	var SphereImageViewer = function () {
+	  function SphereImageViewer(url, width, height) {
+	    _classCallCheck(this, SphereImageViewer);
+	
+	    var scene = new THREE.Scene();
+	
+	    var sphere = this._createSphereMesh(url);
+	    scene.add(sphere);
+	
+	    var camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
+	    camera.position.set(0, 0, 0.1);
+	    camera.lookAt(sphere.position);
+	
+	    var renderer = new THREE.WebGLRenderer();
+	    renderer.setSize(width, height);
+	    renderer.setClearColor({ color: 0x000000 });
+	
+	    this.url = url;
+	    this.width = width;
+	    this.height = height;
+	    this.scene = scene;
+	    this.sphere = sphere;
+	    this.camera = camera;
+	    this.renderer = renderer;
+	    this.domElement = renderer.domElement;
+	  }
+	
+	  _createClass(SphereImageViewer, [{
+	    key: 'update',
+	    value: function update() {
+	      this.sphere.rotation.y += 0.05 * Math.PI / 180;
+	      this.renderer.render(this.scene, this.camera);
+	      //this.controls.update();
+	    }
+	  }, {
+	    key: '_createSphereMesh',
+	    value: function _createSphereMesh(url) {
+	      var geometry = new THREE.SphereGeometry(5, 60, 40);
+	      geometry.scale(-1, 1, 1);
+	      var material = new THREE.MeshBasicMaterial({ map: textureLoader.load(url) });
+	      return new THREE.Mesh(geometry, material);
+	    }
+	  }]);
+	
+	  return SphereImageViewer;
+	}();
+	
+	exports.default = SphereImageViewer;
 
 /***/ }
 /******/ ]);

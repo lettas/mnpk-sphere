@@ -1,4 +1,4 @@
-import SphereImageCanvas from './sphere-image-canvas';
+import SphereImageViewer from './sphere-image-viewer';
 import './control/OrbitControls';
 
 function initialize() {
@@ -7,7 +7,7 @@ function initialize() {
   const imageContainers = document.querySelectorAll('.mnpk-sphere-image');
   for (const imageContainer of imageContainers) {
     const { url, width, height } = imageContainer.dataset;
-    const canvas = new SphereImageCanvas(url, width, height);
+    const canvas = new SphereImageViewer(url, width, height);
     imageContainer.appendChild(canvas.domElement);
     canvases.push(canvas);
   }

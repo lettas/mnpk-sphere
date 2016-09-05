@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const textureLoader = new THREE.TextureLoader();
 
-export default class SphereImageCanvas {
+export default class SphereImageViewer {
   constructor(url, width, height) {
     const scene = new THREE.Scene();
 
