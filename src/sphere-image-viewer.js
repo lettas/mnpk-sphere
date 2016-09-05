@@ -1,56 +1,34 @@
 import * as THREE from 'three';
+
+import SphereImageCanvas from './sphere-image-canvas';
+import SphereImageControlPanel from './sphere-image-control-panel';
+
 import AutoRotateCameraController from './controller/auto-rotate-camera-controller';
 
-const textureLoader = new THREE.TextureLoader();
-
 export default class SphereImageViewer {
+  get domElement() {
+    return this.root;
+  }
+
   constructor(url, width, height) {
-    this.scene = createScene();
-    this.camera = createCamera(width, height);
-    this.renderer = createRenderer(width, height);
-    this.controller = createDefaultCameraController(this.camera, this.renderer.domElement);
+    this.canvas = new SphereImageCanvas(url, width, height);
+    this.panel = new SphereImageControlPanel(width, height);
 
-    this.scene.add(createSphereMesh(url));
+    this.controller = new AutoRotateCameraController(this.canvas.camera, this.canvas.domElement);
+    this.controller.vector = new THREE.Vector3(0, 0.05, 0);
 
-    function createScene() {
-      const scene = new THREE.Scene();
-      return scene;
-    }
+    // TODO パネルのボタンをsubscribeするなど
 
-    function createCamera(width, height) {
-      const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
-      camera.position.set(0,0,0);
-      return camera;
-    }
-
-    function createRenderer(width, height) {
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(width, height);
-      renderer.setClearColor({ color: 0x000000 });
-      return renderer;
-    }
-
-    function createDefaultCameraController(camera, domElement) {
-      const controller = new AutoRotateCameraController(camera, domElement);
-      controller.vector = new THREE.Vector3(0, 0.05, 0);
-      return controller;
-    }
-
-    function createSphereMesh(url) {
-      const geometry = new THREE.SphereGeometry(5, 60, 40);
-      geometry.scale(-1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ map: textureLoader.load(url) });
-      return new THREE.Mesh(geometry, material);
-    }
+    const root = document.createElement('div');
+    root.classList.add('mnpk-sphere-image-container');
+    root.appendChild(this.canvas.domElement);
+    root.appendChild(this.panel.domElement);
+    this.root = root;
   }
 
   update() {
     this.controller.update();
-    this.renderer.render(this.scene, this.camera);
-  }
-
-  get domElement() {
-    return this.renderer.domElement;
+    this.canvas.update();
   }
 }
 
