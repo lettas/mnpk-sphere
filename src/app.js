@@ -1,26 +1,25 @@
 import SphereImageViewer from './sphere-image-viewer';
 
-function initialize() {
-  const canvases = [];
+document.addEventListener('DOMContentLoaded', () => {
+  const viewers = [];
 
-  const imageContainers = document.querySelectorAll('.mnpk-sphere-image');
-  for (const imageContainer of imageContainers) {
-    const { url, width, height } = imageContainer.dataset;
-    const canvas = new SphereImageViewer(url, width, height);
-    imageContainer.appendChild(canvas.domElement);
-    canvases.push(canvas);
+  const containers = document.querySelectorAll('.mnpk-sphere-image');
+  for (const container of containers) {
+    const { url, width, height } = container.dataset;
+    const viewer = new SphereImageViewer(url, width, height);
+    container.appendChild(viewer.domElement);
+    viewers.push(viewer);
   }
 
-  function render() {
-    window.requestAnimationFrame(render);
-
-    for (const canvas of canvases) {
-      canvas.update();
+  const render = () => {
+    for (const viewer of viewers) {
+      viewer.update();
     }
+    window.requestAnimationFrame(render);
   }
+
+  window.viewers = viewers;
 
   render();
-}
-
-document.addEventListener('DOMContentLoaded', initialize);
+});
 
