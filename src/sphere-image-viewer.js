@@ -2,9 +2,8 @@ import * as THREE from 'three';
 
 import SphereImageCanvas from './sphere-image-canvas';
 import SphereImageControlPanel from './sphere-image-control-panel';
-require('./controller/OrbitControls');
 
-import AutoRotateCameraController from './controller/auto-rotate-camera-controller';
+require('./controller/OrbitControls');
 
 export default class SphereImageViewer {
   get domElement() {
@@ -17,7 +16,6 @@ export default class SphereImageViewer {
 
     this.controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
     this.controller.autoRotate = true;
-//    this.controller.vector = new THREE.Vector3(0, 0.05, 0);
 
     // TODO パネルのボタンをsubscribeするなど
 
