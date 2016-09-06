@@ -173,7 +173,7 @@
 	    _classCallCheck(this, SphereImageViewer);
 	
 	    this.canvas = new _sphereImageCanvas2.default(url, width, height);
-	    this.panel = new _sphereImageControlPanel2.default(width, height);
+	    this.panel = new _sphereImageControlPanel2.default();
 	
 	    this.controller = this.createController(ControlTypes.Orbit);
 	
@@ -181,6 +181,7 @@
 	
 	    var root = document.createElement('div');
 	    root.classList.add('mnpk-sphere-image-container');
+	    root.setAttribute('style', 'width: ' + width + 'px; height: ' + height + 'px; position: relative;');
 	    root.appendChild(this.canvas.domElement);
 	    root.appendChild(this.panel.domElement);
 	    this.root = root;
@@ -42060,6 +42061,10 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	var buttonTemplate = function buttonTemplate(buttonText) {
+	  return '<a>' + buttonText + '</a>';
+	};
+	
 	var SphereImageControlPanel = function () {
 	  _createClass(SphereImageControlPanel, [{
 	    key: 'domElement',
@@ -42068,16 +42073,14 @@
 	    }
 	  }]);
 	
-	  function SphereImageControlPanel(width, height) {
+	  function SphereImageControlPanel() {
 	    _classCallCheck(this, SphereImageControlPanel);
 	
-	    var root = document.createElement('div');
-	    root.classList.add('mnpk-sphere-image-control-panel');
+	    this.root = document.createElement('div');
+	    this.root.classList.add('mnpk-sphere-image-control-panel');
+	    this.root.setAttribute('style', 'width: 100%; height: 100%; position: absolute; top: 0;');
 	
-	    // TODO 幅/高さの設定など
 	    // TODO ボタン追加など
-	
-	    this.root = root;
 	  }
 	
 	  return SphereImageControlPanel;

@@ -20,7 +20,7 @@ export default class SphereImageViewer {
 
   constructor(url, width, height) {
     this.canvas = new SphereImageCanvas(url, width, height);
-    this.panel = new SphereImageControlPanel(width, height);
+    this.panel = new SphereImageControlPanel();
 
     this.controller = this.createController(ControlTypes.Orbit);
 
@@ -28,6 +28,7 @@ export default class SphereImageViewer {
 
     const root = document.createElement('div');
     root.classList.add('mnpk-sphere-image-container');
+    root.setAttribute('style', `width: ${width}px; height: ${height}px; position: relative;`);
     root.appendChild(this.canvas.domElement);
     root.appendChild(this.panel.domElement);
     this.root = root;
