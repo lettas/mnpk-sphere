@@ -170,6 +170,8 @@
 	  }]);
 	
 	  function SphereImageViewer(url, width, height) {
+	    var _this = this;
+	
 	    _classCallCheck(this, SphereImageViewer);
 	
 	    this.canvas = new _sphereImageCanvas2.default(url, width, height);
@@ -177,14 +179,18 @@
 	
 	    this.controller = this.createController(ControlTypes.Orbit);
 	
-	    // TODO パネルのボタンをsubscribeするなど
+	    this.root = document.createElement('div');
+	    this.root.classList.add('mnpk-sphere-image-container');
+	    this.root.appendChild(this.canvas.domElement);
+	    this.root.appendChild(this.panel.domElement);
 	
-	    var root = document.createElement('div');
-	    root.classList.add('mnpk-sphere-image-container');
-	    root.setAttribute('style', 'width: ' + width + 'px; height: ' + height + 'px; position: relative;');
-	    root.appendChild(this.canvas.domElement);
-	    root.appendChild(this.panel.domElement);
-	    this.root = root;
+	    this.panel.orbitControlsButton.addEventListener('click', function () {
+	      _this.switchController(ControlTypes.Orbit);
+	    });
+	
+	    this.panel.deviceOrientationControlsButton.addEventListener('click', function () {
+	      _this.switchController(ControlTypes.DeviceOrientation);
+	    });
 	  }
 	
 	  _createClass(SphereImageViewer, [{
@@ -215,6 +221,14 @@
 	      }
 	
 	      return controller;
+	    }
+	  }, {
+	    key: 'switchController',
+	    value: function switchController(controlType) {
+	      if (this.controller) {
+	        this.controller.dispose();
+	      }
+	      this.controller = this.createController(controlType);
 	    }
 	  }]);
 	
@@ -42078,9 +42092,19 @@
 	
 	    this.root = document.createElement('div');
 	    this.root.classList.add('mnpk-sphere-image-control-panel');
-	    this.root.setAttribute('style', 'width: 100%; height: 100%; position: absolute; top: 0;');
 	
 	    // TODO ボタン追加など
+	    var buttonContainer = document.createElement('ul');
+	
+	    this.orbitControlsButton = document.createElement('li');
+	    this.orbitControlsButton.innerText = 'Orbit';
+	    buttonContainer.appendChild(this.orbitControlsButton);
+	
+	    this.deviceOrientationControlsButton = document.createElement('li');
+	    this.deviceOrientationControlsButton.innerText = 'DeviceOrientation';
+	    buttonContainer.appendChild(this.deviceOrientationControlsButton);
+	
+	    this.root.appendChild(buttonContainer);
 	  }
 	
 	  return SphereImageControlPanel;

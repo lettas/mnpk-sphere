@@ -10,10 +10,19 @@ export default class SphereImageControlPanel {
   constructor() {
     this.root = document.createElement('div');
     this.root.classList.add('mnpk-sphere-image-control-panel');
-    this.root.setAttribute('style', 'width: 100%; height: 100%; position: absolute; top: 0;');
 
     // TODO ボタン追加など
+    const buttonContainer = document.createElement('ul');
 
+    this.orbitControlsButton = document.createElement('li');
+    this.orbitControlsButton.innerText = 'Orbit';
+    buttonContainer.appendChild(this.orbitControlsButton);
+
+    this.deviceOrientationControlsButton = document.createElement('li');
+    this.deviceOrientationControlsButton.innerText = 'DeviceOrientation';
+    buttonContainer.appendChild(this.deviceOrientationControlsButton);
+
+    this.root.appendChild(buttonContainer);
   }
 }
 

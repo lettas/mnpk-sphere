@@ -24,14 +24,18 @@ export default class SphereImageViewer {
 
     this.controller = this.createController(ControlTypes.Orbit);
 
-    // TODO パネルのボタンをsubscribeするなど
+    this.root = document.createElement('div');
+    this.root.classList.add('mnpk-sphere-image-container');
+    this.root.appendChild(this.canvas.domElement);
+    this.root.appendChild(this.panel.domElement);
 
-    const root = document.createElement('div');
-    root.classList.add('mnpk-sphere-image-container');
-    root.setAttribute('style', `width: ${width}px; height: ${height}px; position: relative;`);
-    root.appendChild(this.canvas.domElement);
-    root.appendChild(this.panel.domElement);
-    this.root = root;
+    this.panel.orbitControlsButton.addEventListener('click', () => {
+      this.switchController(ControlTypes.Orbit);
+    });
+
+    this.panel.deviceOrientationControlsButton.addEventListener('click', () => {
+      this.switchController(ControlTypes.DeviceOrientation);
+    });
   }
 
   update() {
@@ -59,6 +63,13 @@ export default class SphereImageViewer {
     }
 
     return controller;
+  }
+
+  switchController(controlType) {
+    if (this.controller) {
+      this.controller.dispose();
+    }
+    this.controller = this.createController(controlType);
   }
 }
 
