@@ -4,6 +4,14 @@ import SphereImageCanvas from './sphere-image-canvas';
 import SphereImageControlPanel from './sphere-image-control-panel';
 
 require('./controller/OrbitControls');
+require('./controller/DeviceOrientationControls');
+require('./controller/EmptyControls');
+
+const ControlTypes = {
+  Orbit: Symbol('Orbit'),
+  DeviceOrientation: Symbol('DeviceOrientation'),
+  Empty: Symbol('Empty'),
+};
 
 export default class SphereImageViewer {
   get domElement() {
@@ -14,8 +22,7 @@ export default class SphereImageViewer {
     this.canvas = new SphereImageCanvas(url, width, height);
     this.panel = new SphereImageControlPanel(width, height);
 
-    this.controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
-    this.controller.autoRotate = true;
+    this.controller = this.createController(ControlTypes.Orbit);
 
     // TODO パネルのボタンをsubscribeするなど
 
@@ -29,6 +36,28 @@ export default class SphereImageViewer {
   update() {
     this.controller.update();
     this.canvas.update();
+  }
+
+  createController(controlType) {
+    let controller;
+
+    switch(controlType) {
+      case ControlTypes.Orbit:
+        controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
+        break;
+
+      case ControlTypes.DeviceOrientation:
+        controller = new THREE.DeviceOrientationControls(this.canvas.camera);
+        controller.connect();
+        break;
+
+      case ControlTypes.Empty:
+      default:
+        controller = new THREE.EmptyControls();
+        break;
+    }
+
+    return controller;
   }
 }
 

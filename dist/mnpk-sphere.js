@@ -152,6 +152,14 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	__webpack_require__(7);
+	__webpack_require__(8);
+	__webpack_require__(9);
+	
+	var ControlTypes = {
+	  Orbit: Symbol('Orbit'),
+	  DeviceOrientation: Symbol('DeviceOrientation'),
+	  Empty: Symbol('Empty')
+	};
 	
 	var SphereImageViewer = function () {
 	  _createClass(SphereImageViewer, [{
@@ -167,8 +175,7 @@
 	    this.canvas = new _sphereImageCanvas2.default(url, width, height);
 	    this.panel = new _sphereImageControlPanel2.default(width, height);
 	
-	    this.controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
-	    this.controller.autoRotate = true;
+	    this.controller = this.createController(ControlTypes.Orbit);
 	
 	    // TODO パネルのボタンをsubscribeするなど
 	
@@ -184,6 +191,29 @@
 	    value: function update() {
 	      this.controller.update();
 	      this.canvas.update();
+	    }
+	  }, {
+	    key: 'createController',
+	    value: function createController(controlType) {
+	      var controller = void 0;
+	
+	      switch (controlType) {
+	        case ControlTypes.Orbit:
+	          controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
+	          break;
+	
+	        case ControlTypes.DeviceOrientation:
+	          controller = new THREE.DeviceOrientationControls(this.canvas.camera);
+	          controller.connect();
+	          break;
+	
+	        case ControlTypes.Empty:
+	        default:
+	          controller = new THREE.EmptyControls();
+	          break;
+	      }
+	
+	      return controller;
 	    }
 	  }]);
 	
@@ -43003,6 +43033,134 @@
 		}
 	
 	});
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _three = __webpack_require__(2);
+	
+	var THREE = _interopRequireWildcard(_three);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	THREE.DeviceOrientationControls = function (object) {
+	
+		var scope = this;
+	
+		this.object = object;
+		this.object.rotation.reorder("YXZ");
+	
+		this.enabled = true;
+	
+		this.deviceOrientation = {};
+		this.screenOrientation = 0;
+	
+		this.alpha = 0;
+		this.alphaOffsetAngle = 0;
+	
+		var onDeviceOrientationChangeEvent = function onDeviceOrientationChangeEvent(event) {
+	
+			scope.deviceOrientation = event;
+		};
+	
+		var onScreenOrientationChangeEvent = function onScreenOrientationChangeEvent() {
+	
+			scope.screenOrientation = window.orientation || 0;
+		};
+	
+		// The angles alpha, beta and gamma form a set of intrinsic Tait-Bryan angles of type Z-X'-Y''
+	
+		var setObjectQuaternion = function () {
+	
+			var zee = new THREE.Vector3(0, 0, 1);
+	
+			var euler = new THREE.Euler();
+	
+			var q0 = new THREE.Quaternion();
+	
+			var q1 = new THREE.Quaternion(-Math.sqrt(0.5), 0, 0, Math.sqrt(0.5)); // - PI/2 around the x-axis
+	
+			return function (quaternion, alpha, beta, gamma, orient) {
+	
+				euler.set(beta, alpha, -gamma, 'YXZ'); // 'ZXY' for the device, but 'YXZ' for us
+	
+				quaternion.setFromEuler(euler); // orient the device
+	
+				quaternion.multiply(q1); // camera looks out the back of the device, not the top
+	
+				quaternion.multiply(q0.setFromAxisAngle(zee, -orient)); // adjust for screen orientation
+			};
+		}();
+	
+		this.connect = function () {
+	
+			onScreenOrientationChangeEvent(); // run once on load
+	
+			window.addEventListener('orientationchange', onScreenOrientationChangeEvent, false);
+			window.addEventListener('deviceorientation', onDeviceOrientationChangeEvent, false);
+	
+			scope.enabled = true;
+		};
+	
+		this.disconnect = function () {
+	
+			window.removeEventListener('orientationchange', onScreenOrientationChangeEvent, false);
+			window.removeEventListener('deviceorientation', onDeviceOrientationChangeEvent, false);
+	
+			scope.enabled = false;
+		};
+	
+		this.update = function () {
+	
+			if (scope.enabled === false) return;
+	
+			var alpha = scope.deviceOrientation.alpha ? THREE.Math.degToRad(scope.deviceOrientation.alpha) + this.alphaOffsetAngle : 0; // Z
+			var beta = scope.deviceOrientation.beta ? THREE.Math.degToRad(scope.deviceOrientation.beta) : 0; // X'
+			var gamma = scope.deviceOrientation.gamma ? THREE.Math.degToRad(scope.deviceOrientation.gamma) : 0; // Y''
+			var orient = scope.screenOrientation ? THREE.Math.degToRad(scope.screenOrientation) : 0; // O
+	
+			setObjectQuaternion(scope.object.quaternion, alpha, beta, gamma, orient);
+			this.alpha = alpha;
+		};
+	
+		this.updateAlphaOffsetAngle = function (angle) {
+	
+			this.alphaOffsetAngle = angle;
+			this.update();
+		};
+	
+		this.dispose = function () {
+	
+			this.disconnect();
+		};
+	
+		this.connect();
+	}; /**
+	    * @author richt / http://richt.me
+	    * @author WestLangley / http://github.com/WestLangley
+	    *
+	    * W3C Device Orientation control (http://w3c.github.io/deviceorientation/spec-source-orientation.html)
+	    */
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _three = __webpack_require__(2);
+	
+	var THREE = _interopRequireWildcard(_three);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	THREE.EmptyControls = function () {
+	  undefined.update = function () {};
+	  undefined.dispose = function () {};
+	};
 
 /***/ }
 /******/ ]);
