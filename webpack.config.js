@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 
 module.exports = {
-  entry: './src/app.js',
+  entry: ['babel-polyfill', './src/app.js'],
   output: {
     path: './dist',
     filename: 'mnpk-sphere.js'

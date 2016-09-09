@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import SphereImageViewer from './sphere-image-viewer';
 
 document.addEventListener('DOMContentLoaded', () => {
