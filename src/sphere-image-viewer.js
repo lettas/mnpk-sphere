@@ -36,6 +36,10 @@ export default class SphereImageViewer {
     this.panel.deviceOrientationControlsButton.addEventListener('click', () => {
       this.switchController(ControlTypes.DeviceOrientation);
     });
+
+    this.panel.fullscreenButton.addEventListener('click', () => {
+        this.canvas.setSize(window.innerWidth, window.innerHeight);
+    });
   }
 
   update() {

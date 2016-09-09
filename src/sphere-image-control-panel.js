@@ -22,6 +22,10 @@ export default class SphereImageControlPanel {
     this.deviceOrientationControlsButton.innerText = 'DeviceOrientation';
     buttonContainer.appendChild(this.deviceOrientationControlsButton);
 
+    this.fullscreenButton = document.createElement('li');
+    this.fullscreenButton.innerText = 'Fullscreen';
+    buttonContainer.appendChild(this.fullscreenButton);
+
     this.root.appendChild(buttonContainer);
   }
 }

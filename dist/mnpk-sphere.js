@@ -8322,6 +8322,10 @@
 	    this.panel.deviceOrientationControlsButton.addEventListener('click', function () {
 	      _this.switchController(ControlTypes.DeviceOrientation);
 	    });
+	
+	    this.panel.fullscreenButton.addEventListener('click', function () {
+	      _this.canvas.setSize(window.innerWidth, window.innerHeight);
+	    });
 	  }
 	
 	  _createClass(SphereImageViewer, [{
@@ -50185,6 +50189,13 @@
 	    value: function update() {
 	      this.renderer.render(this.scene, this.camera);
 	    }
+	  }, {
+	    key: 'setSize',
+	    value: function setSize(width, height) {
+	      this.renderer.setSize(width, height);
+	      this.camera.aspect = width / height;
+	      this.camera.updateProjectionMatrix();
+	    }
 	  }]);
 	
 	  return SphereImageCanvas;
@@ -50234,6 +50245,10 @@
 	    this.deviceOrientationControlsButton = document.createElement('li');
 	    this.deviceOrientationControlsButton.innerText = 'DeviceOrientation';
 	    buttonContainer.appendChild(this.deviceOrientationControlsButton);
+	
+	    this.fullscreenButton = document.createElement('li');
+	    this.fullscreenButton.innerText = 'Fullscreen';
+	    buttonContainer.appendChild(this.fullscreenButton);
 	
 	    this.root.appendChild(buttonContainer);
 	  }

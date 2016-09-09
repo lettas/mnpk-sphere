@@ -49,5 +49,11 @@ export default class SphereImageCanvas {
   update() {
     this.renderer.render(this.scene, this.camera);
   }
+
+  setSize(width, height) {
+    this.renderer.setSize(width, height);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+  }
 }
 
