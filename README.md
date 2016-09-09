@@ -24,8 +24,8 @@ $ npm install
 $ # run watchでファイルを監視してコンパイルしてくれる
 $ npm run watch
 
-$ # run serverでhttpサーバが起動する
-$ npm run server
+$ # startでhttpサーバが起動する
+$ npm start
 $ # => http://127.0.0.1:8080 みたいな
 
 ```

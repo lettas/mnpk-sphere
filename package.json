@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch --progress",
     "build": "webpack --config webpack.production.config.js --progress",
-    "server": "http-server ."
+    "start": "http-server ."
   },
   "repository": {
     "type": "git",
