@@ -48,34 +48,36 @@ export default class SphereImageViewer {
   }
 
   createController(controlType) {
-    let controller;
+    const factory = {
+      [ControlTypes.Orbit]: createOrbitControls,
+      [ControlTypes.DeviceOrientation]: createDeviceOrientationControls
+    } [controlType] || createEmptyControls;
 
-    switch(controlType) {
-      case ControlTypes.Orbit:
-        controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
-        controller.enableDamping = true;
-        controller.dampingFactor = 0.15;
-        controller.enableZoom = true;
-        controller.zoomSpeed = 0.5;
-        controller.enableRotate = true;
-        controller.rotateSpeed = -0.25;
-        controller.enablePan = false;
-        controller.minDistance = 0.5;
-        controller.maxDistance = 2;
-        break;
+    return factory(this.canvas);
 
-      case ControlTypes.DeviceOrientation:
-        controller = new THREE.DeviceOrientationControls(this.canvas.camera);
-        controller.connect();
-        break;
-
-      case ControlTypes.Empty:
-      default:
-        controller = new THREE.EmptyControls();
-        break;
+    function createOrbitControls(canvas) {
+      const controller = new THREE.OrbitControls(canvas.camera, canvas.domElement);
+      controller.enableDamping = true;
+      controller.dampingFactor = 0.15;
+      controller.enableZoom = true;
+      controller.zoomSpeed = 0.5;
+      controller.enableRotate = true;
+      controller.rotateSpeed = -0.25;
+      controller.enablePan = false;
+      controller.minDistance = 0.5;
+      controller.maxDistance = 2;
+      return controller;
     }
 
-    return controller;
+    function createDeviceOrientationControls(canvas) {
+      const controller = new THREE.DeviceOrientationControls(canvas.camera);
+      controller.connect();
+      return controller;
+    }
+
+    function createEmptyControls(canvas) {
+      return new THREE.EmptyControls();
+    }
   }
 
   switchController(controlType) {

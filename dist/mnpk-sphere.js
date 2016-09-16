@@ -8280,6 +8280,8 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	__webpack_require__(302);
@@ -8337,34 +8339,35 @@
 	  }, {
 	    key: 'createController',
 	    value: function createController(controlType) {
-	      var controller = void 0;
+	      var _ControlTypes$Orbit$C;
 	
-	      switch (controlType) {
-	        case ControlTypes.Orbit:
-	          controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
-	          controller.enableDamping = true;
-	          controller.dampingFactor = 0.15;
-	          controller.enableZoom = true;
-	          controller.zoomSpeed = 0.5;
-	          controller.enableRotate = true;
-	          controller.rotateSpeed = -0.25;
-	          controller.enablePan = false;
-	          controller.minDistance = 0.5;
-	          controller.maxDistance = 2;
-	          break;
+	      var factory = (_ControlTypes$Orbit$C = {}, _defineProperty(_ControlTypes$Orbit$C, ControlTypes.Orbit, createOrbitControls), _defineProperty(_ControlTypes$Orbit$C, ControlTypes.DeviceOrientation, createDeviceOrientationControls), _ControlTypes$Orbit$C)[controlType] || createEmptyControls;
 	
-	        case ControlTypes.DeviceOrientation:
-	          controller = new THREE.DeviceOrientationControls(this.canvas.camera);
-	          controller.connect();
-	          break;
+	      return factory(this.canvas);
 	
-	        case ControlTypes.Empty:
-	        default:
-	          controller = new THREE.EmptyControls();
-	          break;
+	      function createOrbitControls(canvas) {
+	        var controller = new THREE.OrbitControls(canvas.camera, canvas.domElement);
+	        controller.enableDamping = true;
+	        controller.dampingFactor = 0.15;
+	        controller.enableZoom = true;
+	        controller.zoomSpeed = 0.5;
+	        controller.enableRotate = true;
+	        controller.rotateSpeed = -0.25;
+	        controller.enablePan = false;
+	        controller.minDistance = 0.5;
+	        controller.maxDistance = 2;
+	        return controller;
 	      }
 	
-	      return controller;
+	      function createDeviceOrientationControls(canvas) {
+	        var controller = new THREE.DeviceOrientationControls(canvas.camera);
+	        controller.connect();
+	        return controller;
+	      }
+	
+	      function createEmptyControls(canvas) {
+	        return new THREE.EmptyControls();
+	      }
 	    }
 	  }, {
 	    key: 'switchController',
@@ -51342,8 +51345,8 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	THREE.EmptyControls = function () {
-	  undefined.update = function () {};
-	  undefined.dispose = function () {};
+	  this.update = function () {};
+	  this.dispose = function () {};
 	};
 
 /***/ }
