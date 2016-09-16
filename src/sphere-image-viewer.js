@@ -58,11 +58,11 @@ export default class SphereImageViewer {
     function createOrbitControls(canvas) {
       const controller = new THREE.OrbitControls(canvas.camera, canvas.domElement);
       controller.enableDamping = true;
-      controller.dampingFactor = 0.15;
+      controller.dampingFactor = 0.25;
       controller.enableZoom = true;
-      controller.zoomSpeed = 0.5;
+      controller.zoomSpeed = 1.5;
       controller.enableRotate = true;
-      controller.rotateSpeed = -0.25;
+      controller.rotateSpeed = -0.20;
       controller.enablePan = false;
       controller.minDistance = 0.5;
       controller.maxDistance = 2;
