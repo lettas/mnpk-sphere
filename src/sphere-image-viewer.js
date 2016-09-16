@@ -53,6 +53,15 @@ export default class SphereImageViewer {
     switch(controlType) {
       case ControlTypes.Orbit:
         controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
+        controller.enableDamping = true;
+        controller.dampingFactor = 0.15;
+        controller.enableZoom = true;
+        controller.zoomSpeed = 0.5;
+        controller.enableRotate = true;
+        controller.rotateSpeed = -0.25;
+        controller.enablePan = false;
+        controller.minDistance = 0.5;
+        controller.maxDistance = 2;
         break;
 
       case ControlTypes.DeviceOrientation:

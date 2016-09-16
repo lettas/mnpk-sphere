@@ -8342,6 +8342,15 @@
 	      switch (controlType) {
 	        case ControlTypes.Orbit:
 	          controller = new THREE.OrbitControls(this.canvas.camera, this.canvas.domElement);
+	          controller.enableDamping = true;
+	          controller.dampingFactor = 0.15;
+	          controller.enableZoom = true;
+	          controller.zoomSpeed = 0.5;
+	          controller.enableRotate = true;
+	          controller.rotateSpeed = -0.25;
+	          controller.enablePan = false;
+	          controller.minDistance = 0.5;
+	          controller.maxDistance = 2;
 	          break;
 	
 	        case ControlTypes.DeviceOrientation:
@@ -50163,8 +50172,9 @@
 	    }
 	
 	    function createCamera(width, height) {
-	      var camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
-	      camera.position.set(0, 0, 0.1);
+	      var camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 100);
+	      camera.position.set(0.01, 0, 0);
+	      camera.lookAt(0, 0, 0);
 	      return camera;
 	    }
 	
@@ -50177,11 +50187,11 @@
 	    }
 	
 	    function createSphereMesh(url) {
-	      var geometry = new THREE.SphereGeometry(5, 60, 40);
+	      var geometry = new THREE.SphereGeometry(1, 36, 18);
 	      geometry.scale(-1, 1, 1);
 	      var texture = textureLoader.load(url);
-	      texture.magFilter = THREE.LinearFilter;
-	      texture.minFilter = THREE.LinearFilter;
+	      texture.magFilter = THREE.NearestFilter;
+	      texture.minFilter = THREE.NearestFilter;
 	      var material = new THREE.MeshBasicMaterial({ map: texture });
 	      return new THREE.Mesh(geometry, material);
 	    }
@@ -50315,7 +50325,7 @@
 	
 		// Set to false to disable rotating
 		this.enableRotate = true;
-		this.rotateSpeed = -1.0;
+		this.rotateSpeed = 1.0;
 	
 		// Set to false to disable panning
 		this.enablePan = true;
