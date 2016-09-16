@@ -25,8 +25,9 @@ export default class SphereImageCanvas {
     }
 
     function createCamera(width, height) {
-      const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
-      camera.position.set(0, 0, 0.1);
+      const camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 100);
+      camera.position.set(0.01, 0, 0);
+      camera.lookAt(0, 0, 0);
       return camera;
     }
 
@@ -39,11 +40,11 @@ export default class SphereImageCanvas {
     }
 
     function createSphereMesh(url) {
-      const geometry = new THREE.SphereGeometry(5, 60, 40);
+      const geometry = new THREE.SphereGeometry(1, 36, 18);
       geometry.scale(-1, 1, 1);
       const texture = textureLoader.load(url);
-      texture.magFilter = THREE.LinearFilter;
-      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.NearestFilter;
+      texture.minFilter = THREE.NearestFilter;
       const material = new THREE.MeshBasicMaterial({ map: texture });
       return new THREE.Mesh(geometry, material);
     }
