@@ -7,7 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const containers = document.querySelectorAll('.mnpk-sphere-image');
   for (const container of containers) {
     const { url, width, height } = container.dataset;
-    const viewer = new SphereImageViewer(url, width, height);
+    const viewer = new SphereImageViewer(
+      url,
+      Math.min(width, window.innerWidth),
+      Math.min(height, window.innerHeight)
+    );
     container.appendChild(viewer.domElement);
     viewers.push(viewer);
   }

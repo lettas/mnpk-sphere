@@ -70,7 +70,7 @@
 	      var width = _container$dataset.width;
 	      var height = _container$dataset.height;
 	
-	      var viewer = new _sphereImageViewer2.default(url, width, height);
+	      var viewer = new _sphereImageViewer2.default(url, Math.min(width, window.innerWidth), Math.min(height, window.innerHeight));
 	      container.appendChild(viewer.domElement);
 	      viewers.push(viewer);
 	    }
@@ -8348,11 +8348,11 @@
 	      function createOrbitControls(canvas) {
 	        var controller = new THREE.OrbitControls(canvas.camera, canvas.domElement);
 	        controller.enableDamping = true;
-	        controller.dampingFactor = 0.15;
+	        controller.dampingFactor = 0.25;
 	        controller.enableZoom = true;
-	        controller.zoomSpeed = 0.5;
+	        controller.zoomSpeed = 1.5;
 	        controller.enableRotate = true;
-	        controller.rotateSpeed = -0.25;
+	        controller.rotateSpeed = -0.20;
 	        controller.enablePan = false;
 	        controller.minDistance = 0.5;
 	        controller.maxDistance = 2;
