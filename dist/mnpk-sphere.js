@@ -50179,7 +50179,10 @@
 	    function createSphereMesh(url) {
 	      var geometry = new THREE.SphereGeometry(5, 60, 40);
 	      geometry.scale(-1, 1, 1);
-	      var material = new THREE.MeshBasicMaterial({ map: textureLoader.load(url) });
+	      var texture = textureLoader.load(url);
+	      texture.magFilter = THREE.LinearFilter;
+	      texture.minFilter = THREE.LinearFilter;
+	      var material = new THREE.MeshBasicMaterial({ map: texture });
 	      return new THREE.Mesh(geometry, material);
 	    }
 	  }

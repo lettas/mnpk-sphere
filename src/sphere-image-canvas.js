@@ -41,7 +41,10 @@ export default class SphereImageCanvas {
     function createSphereMesh(url) {
       const geometry = new THREE.SphereGeometry(5, 60, 40);
       geometry.scale(-1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ map: textureLoader.load(url) });
+      const texture = textureLoader.load(url);
+      texture.magFilter = THREE.LinearFilter;
+      texture.minFilter = THREE.LinearFilter;
+      const material = new THREE.MeshBasicMaterial({ map: texture });
       return new THREE.Mesh(geometry, material);
     }
   }
